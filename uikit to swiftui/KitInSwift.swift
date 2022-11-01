@@ -9,31 +9,27 @@ import SwiftUI
 
 struct KitInSwift: UIViewRepresentable {
     
-    @Binding var value: Float
-    let alpha: CGFloat
+    @Binding var value: Double
+    let alpha: Int
     let colorSlider: UIColor
     
     func makeUIView(context: Context) -> UISlider {
         let sliderKit = UISlider()
-            
         sliderKit.minimumValue = 0
         sliderKit.maximumValue = 100
-        
-        
         
         sliderKit.addTarget(
             context.coordinator,
             action: #selector(Coordinator.didTapDone),
-            for: .editingDidEnd
+            for: .valueChanged
         )
         
-    
         return sliderKit
     }
 
     func updateUIView(_ uiView: UISlider, context: Context) {
-        uiView.value = value
-        uiView.thumbTintColor = colorSlider.withAlphaComponent(alpha / 100)
+        uiView.value = Float(value)
+        uiView.thumbTintColor = colorSlider.withAlphaComponent(CGFloat(alpha) / 100)
     }
   
     func makeCoordinator() -> Coordinator {
@@ -43,21 +39,21 @@ struct KitInSwift: UIViewRepresentable {
 
 extension KitInSwift {
     class Coordinator: NSObject {
-        @Binding var value: Float
+        @Binding var value: Double
         
-        init(value: Binding<Float>) {
+        init(value: Binding<Double>) {
             self._value = value
         }
         
         @objc func didTapDone(_ sender: UISlider) {
-            value = sender.value
+            value = Double(sender.value)
         }
     }
 }
 
 struct KitInSwift_Previews: PreviewProvider {
     static var previews: some View {
-        KitInSwift(value: .constant(10.0), alpha: CGFloat(100), colorSlider: .blue)
+        KitInSwift(value: .constant(10.0), alpha: Int(CGFloat(100)), colorSlider: .blue)
     }
 }
 

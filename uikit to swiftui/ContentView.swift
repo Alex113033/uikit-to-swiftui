@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @State private var alert = false
-
     @State private var targetValue = 50
     @State private var currentValue = 50.0
-    
-    @State var value: Float = 0.1
-    
+
     var body: some View {
         
         VStack {
@@ -24,7 +20,7 @@ struct ContentView: View {
                 .padding()
                 HStack {
                     Text("0")
-                    KitInSwift(value: $value, alpha: CGFloat(currentValue), colorSlider: .blue)
+                    KitInSwift(value: $currentValue, alpha: computeScore(), colorSlider: .blue)
                     Text("100")
                 }
             Button("Проверка") {
